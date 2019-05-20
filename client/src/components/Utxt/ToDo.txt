@@ -1,0 +1,151 @@
+  - Übersicht, Statistik
+  Top 3 Worte Det, Ueb
+  Wort-Tabelle mit wortStat
+  WortStat groupstat darstellen
+  topworte
+  Hierarchie darstellen (SatzKarte?)
+  Übersicht über geladene Satze (Überschrift, Typ, Anzahl, Verknüpfungsgrad)
+  Worte-, Satze-Statistik und Verknüpfungen
+  DB-, Userdata-, Satz-, Wortstatistik
+
+  - Wortsurf: Buttons uns Auswahlliste
+  Auswahllisten (ueb-, det-worte) erstellen, Darstellung überlagert mit fixed
+  Pfeile zeigen verknüpfte worte an
+  Wortsurfen mit Steuerung über Wortstatistik am einzelnen Wort, Überschrift fett, kursiv oder unterstrichen
+  Anzahl Satze, Anzahl Worte in Button
+  weitere Auswahl-Buttons erstellen
+  Satztyp-Anzeige im Wort
+  wortsurfen horizontal, rechts evtl. aktueller Satztyp
+  Kombination von Auswahllisten
+
+  - Input / Edit
+  Importeinstellungen in den Usereinstellungen
+  Groß-, Kleinschreibung bei Wortverknüpfungen ignorieren (Wortsurf, Satzkarte, etc.)
+  Eingabe: 1. Import (Überschriften erkennen), 2. Normierung, 3.Modifikation (Autoüberschriften, Änderungen, ggf. überschreiben)
+  Textinput sollte Subüberschriften nicht verändern bei Kleinschreibung oder sofort klein schreiben
+  Tabellen Edit Überschriften anklickbar
+  Menü Texteingabe obere Satzauswahl Textinput
+  Satz Update über ReactTable renderEditable?
+  Satztypen-Farbcode editierbar ändern
+  Satz-Update mit Auswahl der gewünschten Option
+  Worte verschieben bei Update/Eingabe
+  Fehler bei Speicherung/Update abfangen
+
+  - Diverses
+  wortInfo analog zu wortFilter in SatzTable, createWort
+  Status vom Zyklus nur lokal und nicht in userdata -> übergeordnete Zykluskomponente mit State
+  username bei deleteSatz abfragen
+  ähnliche Sätze oder Satzabschnitte erkennen
+  Edit, Erhalten der Sortierung in SatzTable
+  App-Icon
+  User-Freigaben einstellen und berücksichtigen
+  Graphql-cache
+  Graphql-update
+  Pro Benutzer mehr als ein Wissensspeicher, -safe
+  Abspeichern rückgängig machen (undo / redo)
+  API mit Authorisierung sichern
+  Autoerstellung von Wortkombination-Satze
+  Zwischenspeicher zur Sammlung ausgewählter satze
+
+  - Bugs:
+  SatzGitter, src/components/SatzTable/createWort.js:35, property 'ueb-nsworteZahl' of undefined
+  gelbe Warnungen abarbeiten
+  In Texteingabe geht das Eingabefeld für Satztyp weg, wenn man das Wort löscht
+  worte = null bei zusammengesetzten Worten (Cross-Plattform -> CrossPlattform), Nullworte entfernen
+  typfarben.length > typen.length in userdata.user
+  WortSurfen Nebenspalte StartWort löschen, löscht z.T. 1. Spalte
+  Satzsuche sucht nicht in Überschriften
+  Zahlenaustausch entfernt Leerzeichen
+  duplicate key error bei Wortspeicherung abfangen
+
+
+  Fertig / unnötig:
+  ueb und det austauschen
+  start / signin - Ladefehler
+  WortStat-Werte in Verhältnis zur Gesamt-Statistik setzen (oberer, unterer Balken)
+  Gesamt-Statistik in wortStat.js
+  Satz-Kategorien in SatzTab.js
+  ein-, ausblenden Typ, Überschrift, Stopwort
+  mind map Testen -> Rechercheauftrag
+  Anzeige / Steuerung am Wort: was ist Typ, Überschrift, Stopwort
+  getUserWorte
+  detailworte
+  uebWorte statt uebWerte
+  wortlinks
+  Vorschautabelle anklickbar, handleFkt
+  createButton, createGitter, 
+  automatische Aktualisierung der Liste nach Edit
+  mehr als einen Satz editieren
+  Sortierbare, durchsuchbare Liste für SatzSuche, SatzListe, SatzGitter
+  SatzTable oder viewedit-Zyklus als Standardliste
+  Farbcode zur graduellen Anzeige Überblick/Details
+  Wort löschen, Worte ausblenden?
+  neue Wortliste anfangen, wenn bereits Nachbarwort besteht
+  alle Steuerungen ein-/ausblenden
+  cursor statt vorwort
+  Button "Satz ausblenden", "Zeilenumbruch" für mehr Platz
+  Zeilenumbruch in der Tabellenzelle -> white-space: "normal"
+  Anzeigen zunächst immer alphabetisch oder nach Datum ordnen
+  nicht richtiger Savestatus Update nach Veränderung eines worts 
+  Stoppwörter für Verknüpfungen ignorieren, Verknüpfungsstopp durch Stoppwort
+  Stoppworte anwenden bei Satzkarte Überblick
+  Stoppwort verwenden in SatzGitter
+  DB-Reset, Systematische Beispielsätze zum Testen
+  Stoppwoerter editierbar pro Benutzer, 
+  Satztypen editierbar pro Benutzer
+  Db-Änderung, stoppwort, Typ
+  Worte mit Attribut Stoppworte oder Typen?
+  User.username in Wort.typ und .stop, color weg -> bleibt erstmal
+  Wort stopuser, typuser statt stop, typ, color
+  user.satztypen statt satztypenfarben
+  typenfarbe in user, 
+  statt typ, wort._id angeben und abfragen, zur Darstellung auflösen
+  withSatztypenfarben ändern, Darstellung von satz.typ.wort statt satz.typ
+  admin suchSatze
+  Sortierung der SatzTable nach Datum standard, sh. SatzSuche falsch
+  TextInput Gesamt-Typauswahl verändert nicht saveStatus
+  automatische Satzstatus vor Edit
+  Validierung der Eingaben vor dem Speichern (Überschriift+Typ unterschiedlich)
+  Satz-Speicherstatus!
+  SatzTable Filter align
+  zoom- und scrollbar, responsive
+  SatzTable Sortierung nach Datum
+  Update Button in SatzEditCont
+  Satzspeicherstatus in SatzEditCont.js mit GET_SAVE_STATI
+  NavLinks sollten aktuellen Ort zeigen
+  callback aufraeumen
+  Kurz-Edit-Zyklus
+  Button Satze laden
+  Spalten ausblenden
+  Satze zur Bearbeitung auswählen und TextInput/Satzedit aufrufen -> satzeEdit
+  Userdata-Zyklus mit Satzsuche, Textinput und SatzGitter
+  Textinput von außen steuern satze -> callback(satze')
+  Satze abspeichern, löschen
+  keine Selektion bei 1 Option
+  wort aus bestehenden Überschriften wählen -> Drag and Drop mit Strg
+  createSelect für TextInput.js
+
+
+/* !!! ToDo SatzGitter.js:
+- angeklicktes Wort markieren
+- Nur die Typen anzeigen, zu denen es auch Worte gibt
+- SatzUndWort Satz im SatzGitter anklickbar machen
+- Cache über mongoose erstellen und überprüfen
+- Wiederholung der Überschrift in Details / Überblick abstellen
+- Erstellen einer Funktion für den Typ-Klick
+- aktiven Menüeintrag markieren
+- HOC mit SatzGitter?
+- Kreuzwort
+- Wort in Überblick dick hervorheben
+- Userdaten aus satze und satzzellen zusammenfassen und ggf. auf dem Server speichern
+- Problem: main-Faltung verändert Satzkarten
+
+Fertig:
+- mehrere SatzZellen im Satzgitter mit Klick von Zelle zu Zelle
+- Klick innerhalb des Gitters, flag mit Satz-export zur App
+*/
+
+Diverses:
+recharts
+chart.js
+highcharts

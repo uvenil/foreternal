@@ -1,0 +1,38 @@
+{
+  "name": "utxt",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "engines": {
+    "node": "v10.7.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "server": "export NODE_ENV=development || SET NODE_ENV=development && nodemon server.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently --names \"server,client\" \"npm run server --silent\" \"npm run client --silent\"",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
+  },
+  "author": "Michael Ackmann",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "apollo-server-express": "^2.3.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.6.1",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "graphql": "^0.13.2",
+    "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
+    "match-sorter": "^2.3.0",
+    "mongoose": "^5.4.2",
+    "namor": "^1.1.1",
+    "prop-types": "^15.6.2",
+    "react-textarea-autosize": "^7.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}

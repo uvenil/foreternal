@@ -1,0 +1,172 @@
+{
+  "_id": "5b785aa304fa554e38036c1e",
+  "typ": "Absatz",
+  "wort": {
+    "_id": "5b785aa304fa554e38036bae",
+    "wort": "fortschritte",
+    "__typename": "Wort"
+  },
+  "worte": [
+    {
+      "_id": "5b785aa304fa554e38036bbb",
+      "wort": "aber",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036bf0",
+      "wort": "ein",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c0f",
+      "wort": "christentum",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036bba",
+      "wort": "das",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c00",
+      "wort": "vor",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c05",
+      "wort": "allem",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c10",
+      "wort": "kranke",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c0a",
+      "wort": "nerven",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c15",
+      "wort": "beruhigen",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036bb3",
+      "wort": "soll",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c06",
+      "wort": "hat",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c11",
+      "wort": "jene",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c0b",
+      "wort": "furchtbare",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c16",
+      "wort": "lösung",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c01",
+      "wort": "eines",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c07",
+      "wort": "«gottes",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c12",
+      "wort": "am",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c0c",
+      "wort": "kreuze",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c17",
+      "wort": "überhaupt",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c02",
+      "wort": "nicht",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c08",
+      "wort": "nötig",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c13",
+      "wort": "weshalb",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036bcc",
+      "wort": "im",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c18",
+      "wort": "stillen",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c03",
+      "wort": "überall",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036bb5",
+      "wort": "der",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c14",
+      "wort": "buddhismus",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036bc9",
+      "wort": "in",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c19",
+      "wort": "europa",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036bae",
+      "wort": "fortschritte",
+      "__typename": "Wort"
+    },
+    {
+      "_id": "5b785aa304fa554e38036c09",
+      "wort": "macht",
+      "__typename": "Wort"
+    }
+  ],
+  "worteIf": [
+    null
+  ],
+  "createdDate": "Sat Aug 18 2018 19:42:59 GMT+0200 (Central European Summer Time)",
+  "username": "C",
+  "__typename": "Satz"
+}

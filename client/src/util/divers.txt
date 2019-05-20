@@ -1,0 +1,7 @@
+Attribute value as variable name
+It all depends on variable namespace and scope, but generally next code should do the job.
+
+$(".text").click(function(){
+    var varFromAttr = window[$(this).attr("id")];
+    $(this).html(varFromAttr);
+});
