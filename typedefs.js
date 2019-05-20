@@ -57,7 +57,8 @@ type User {
   username: String! @unique
   password: String!
   email: String!
-  favorites: [Satz]
+  favorites: [Zitat]
+  zitate: [Zitat]
   satze: [Satz]
   worte: [Wort]
   stopworte: [Wort]
@@ -85,6 +86,16 @@ type Recipe {
   likes: Int
   createdDate: String
   username: String
+}
+
+input ZitatInput {
+  zitat: String!
+  kennwort: String!
+  kategorie: String!
+  rang: Int
+  likes: Int
+  autor: String
+  username: String!
 }
 
 input WortInput {
@@ -175,6 +186,10 @@ type Query {
 
   getUserRecipes(username: String!): [Recipe]
   getCurrentUser: User
+
+  zitat(_id: ID, kennwort: String, wort: String): Zitat
+  getAllZitate: [Zitat]
+  getUserZitate(username: String!): [Zitat]
 }
 
 type Mutation {
@@ -206,6 +221,12 @@ type Mutation {
 
   signinUser(username: String!, password: String!): Token
   signupUser(username: String!, email: String!, password: String!): Token
+
+  addZitat(input: ZitatInput): Zitat
+  deleteZitate(ids: [ID!]!): [Zitat]
+  deleteZitat(_id: ID!): Zitat
+  updateZitat(_id: ID!, input: ZitatInput): Zitat
+
 }
 
 `;

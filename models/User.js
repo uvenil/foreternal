@@ -20,7 +20,11 @@ const UserSchema = new Schema({
   },
   favorites: {
     type: [Schema.Types.ObjectId],
-    ref: "Satz"
+    ref: "Zitat"
+  },
+  zitate: {
+    type: [Schema.Types.ObjectId],
+    ref: "Zitat"
   },
   satze: {
     type: [Schema.Types.ObjectId],

@@ -822,6 +822,39 @@ exports.resolvers = {
       return user;
     },
 
+    // Zitat -----------------------------------------------------------------
+    zitat: async (root, { _id, kennwort, wort }, { Zitat }) => {
+      let zitat;
+      if (_id) {
+        zitat = await Zitat.findOne({ _id });
+      } else if (typeof kennwort==="string") {
+        zitat = await Zitat.findOne({kennwort});
+      } else if (typeof wort==="string") {
+        zitat = await Zitat.findOne({ 
+          wort: new RegExp(wort), 
+        });
+      } else {
+        throw new Error("Weder _id, noch kennwort, noch wort in Zitat für die zitat-query vorhanden!  (resolvers.js Query.zitat)");
+      }
+      return zitat;
+    },
+    getAllZitate: async (root, args, { Zitat }) => {
+      const allZitate = await Zitat.find().sort({ 
+        updatedDate: "desc",
+        kennwort: "asc"
+      });
+      return allZitate;
+    },
+    getUserZitate: async (root, { username }, { Zitat }) => {
+      const findObj = username!=="admin"? {username}: {};   // bei admin ohne username suchen
+      const userZitate = await Zitat.find(findObj).sort({
+        updatedDate: "desc",
+        kennwort: "asc"
+      });
+      console.log("username", username, ", Anzahl Zitate", userZitate.length);
+      return userZitate;
+    },
+    
     // Recipe -----------------------------------------------------------------
     getAllRecipes: async (root, args, { Recipe }) => {
       const allRecipes = await Recipe.find().sort({ createdDate: "desc" });
@@ -1244,6 +1277,107 @@ exports.resolvers = {
         read: [],
       }).save();
       return { token: createToken(newUser, process.env.SECRET, "3hr") };
+    },
+
+    // Zitat -----------------------------------------------------------------
+    addZitat: async (root, { input }, { Zitat, User }) => {  // input = alles Strings
+      console.log("input:", input.zitat, "-", input.kennwort);
+      let { 
+        zitat,
+        kennwort,
+        kategorie,
+        rang,
+        likes,
+        autor,
+        username
+      } = input;
+      // neuen Zitat erzeugen
+      let newZitat;
+      try {
+        newZitat = await new Zitat({
+          zitat,
+          kennwort,
+          kategorie,
+          rang,
+          likes,
+          autor,
+          username,
+          updatedDate: Date.now(),
+          createdDate: Date.now(),
+        }).save();
+      } catch (e) {
+        console.log(`! Zitat \"${input.kennwort}\" nicht!`);
+        // console.log(`Error: ${e}`);
+        return;
+      }
+      if (!newZitat) return null;
+      // Zitat beim Ersteller-User eintragen
+      try {
+        await User.findOneAndUpdate(
+          { username },
+          { 
+            $addToSet: { 
+              zitate: newZitat._id, 
+          },
+            $set: { updatedDate: Date.now() },
+          },
+          { new: true }
+        );
+      } catch (e) {
+        console.log(`! User \"${username}\" zum Satz \"${input.kennwort}\" : \"${input.zitat}\" konnten nicht geupdatet werden! (Aufruf: findOneAndUpdate, Fkt. addZitat, resolvers.js):   ${e}`);
+        return null;
+      }
+      return newZitat;
+    },
+    deleteZitate: async (root, { ids }, { Zitat, User }) => {  // Zitate löschen
+      if (!Array.isArray(ids)) ids = [ids];
+      console.log("dZ ids", ids);
+      let zitat;
+      const zitate = await Promise.all(ids.map(async _id => {
+        try {
+          zitat = await this.resolvers.Mutation.deleteZitat(root, { _id }, { Zitat, User });
+          if (!zitat) console.log(`Fkt deleteZitate, Aufruf deleteZitat gab für id ${_id} kein Ergebnis!`);
+          return zitat;
+        } catch (e) {
+          console.log(`! Zitat konnte nicht fehlerfrei gelöscht werden! (Aufruf: deleteZitat, Fkt. deleteZitate, resolver.js)`);
+          console.log("Error: ", e);
+          return null;
+        }
+      }))
+      console.log(`${zitate.length} zitate: ${zitate.map(s => String(s.createdDate).slice(0, 25))}`);
+      return zitate;
+    },
+    deleteZitat: async (root, { _id }, { Zitat, User }) => {
+      const zitat = await Zitat.findOneAndRemove({ _id });
+      if (!zitat)   return null;
+      // Zitat beim Ersteller-User austragen
+      try {
+        await User.findOneAndUpdate(
+          { username: zitat.username },
+          { 
+            $pull: { 
+              zitate: zitat._id, 
+          },
+            $set: { updatedDate: Date.now() },
+          },
+          { new: true }
+        );
+      } catch (e) {
+        console.log(`! User \"${zitat.username}\" zum Zitat \"${zitat.kennwort}\" : \"${zitat.zitat}\" konnten nicht geupdatet werden! (Aufruf: findOneAndUpdate, Fkt. deleteZitat, resolvers.js):   ${e}`);
+        return null;
+      }
+      return zitat;
+    },
+    updateZitat: async (root, { _id, input }, { Zitat }) => {
+      const updatezitat = await Zitat.findOneAndUpdate(
+        { _id },
+        { $set: {
+          ...input,
+          updatedDate: Date.now()
+        } },
+        { new: true }
+      );
+      return updatezitat;
     },
 
     // Recipe -----------------------------------------------------------------
