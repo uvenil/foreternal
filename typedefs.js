@@ -27,6 +27,19 @@ type Satz {
   updatedDate: String
 }
 
+type Zitat {
+  _id: ID
+  zitat: String!
+  kennwort: String!
+  kategorie: String
+  rang: Int
+  likes: Int
+  autor: String
+  username: String
+  createdDate: String
+  updatedDate: String
+}
+
 type SaveStatus {
   ops: [Ops]!
   savestatus: String!

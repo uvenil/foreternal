@@ -18,7 +18,6 @@ const Recipe = require("./models/Recipe");
 const User = require("./models/User");
 const Wort = require("./models/Wort");
 const Satz = require("./models/Satz");
-const Zitat = require("./models/Zitat");
 const Rechte = require("./models/Rechte");
 
 // once
@@ -42,7 +41,6 @@ let bOnce = once(`
   SECRET: ${process.env.SECRET}
 `);
 
-
 // create ApolloServer
 const { ApolloServer, graphiqlExpress, gql } = require('apollo-server-express');
 const { typeDefs } = require("./typedefs");
@@ -54,7 +52,6 @@ const server = new ApolloServer({
   context: ({ req }) => ({  // { currentUser }
     Wort,
     Satz,
-    Zitat,
     Recipe,
     User,
     Rechte,
@@ -66,13 +63,39 @@ const server = new ApolloServer({
 
 // Connects to database
 const autoIndex = ( process.env.NODE_ENV === "production") ? false : true;
-// !!! Wo wird der Index in production erstellt?
+// !!! Wo wird der Index in proSduction erstellt?
 mongoose
   .set('useFindAndModify', false) // https://stackoverflow.com/questions/52572852/deprecationwarning-collection-findandmodify-is-deprecated-use-findoneandupdate
   .set('useCreateIndex', true)  // https://stackoverflow.com/questions/51916630/mongodb-mongoose-collection-find-options-deprecation-warning
   .connect(process.env.MONGODB_URI, { useNewUrlParser: true, autoIndex: autoIndex })
   .then(() => console.log("DB connected"))
   .catch(err => console.error(err));
+
+// Beispieldatenimport
+// if (bOnce) {  // nur einmal ausführen
+if (1===2) {  // nur einmal ausführen
+  // - Entweder neue Daten erzeugen:  (Achtung Nodemon in Endlosschleife wenn im Projektordner gespeichert wird)
+  // let daten = require("./fixtures/daten.js"); // wird direkt in das Objekt geparsed ohne JSON.parse
+  // daten = daten.satze.slice(0,5);
+  // - oder bestehende Daten aus daten.json importieren
+  let daten = require("./fixtures/daten.json"); // wird direkt in das Objekt geparsed ohne JSON.parse
+  daten = daten.slice(0,30);
+  // console.log("daten", daten);
+  
+  const addSatz = resolvers.Mutation.addFullSatz;
+  let newSatz, input;
+  daten.forEach(async satz => {
+    input = {...satz};
+    try {
+      newSatz = await addSatz(global, { input }, { Satz, Wort });
+      if (!!newSatz)  console.log(`${satz.wort} : ${satz.typ.wort}`);
+    } catch (e) {
+      console.log(`! Satz konnte nicht fehlerfrei gespeichert werden! (Aufruf: addSatz, Fkt. addFullSatz, server.js)`);
+      // console.log(`! Satz \"${satz.wort}\" : \"${satz.worte}\" konnte nicht fehlerfrei gespeichert werden! (Aufruf: addSatz, Fkt. addFullSatz, server.js)`);
+    }
+    return;
+  });
+}
 
 // Initializes application
 const app = express();
@@ -86,6 +109,7 @@ app.use(cors("*"));
 // Set up JWT authentication middleware
 app.use(async (req, res, next) => {
   const token = req.headers["authorization"];
+  
   if (!!token && token !== "null" && String(token).trim() !== "") {
     try {
       const currentUser = await jwt.verify(token, process.env.SECRET);
@@ -103,14 +127,12 @@ app.use(async (req, res, next) => {
 //   bodyParser.json(),
 // );
 
-// production -> client/build
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
-// development, test -> client/public
 } else {
   app.use(express.static("client/public"));
 }
