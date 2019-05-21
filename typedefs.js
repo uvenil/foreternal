@@ -89,13 +89,13 @@ type Recipe {
 }
 
 input ZitatInput {
-  zitat: String!
-  kennwort: String!
-  kategorie: String!
+  zitat: String
+  kennwort: String
+  kategorie: String
   rang: Int
   likes: Int
   autor: String
-  username: String!
+  username: String
 }
 
 input WortInput {
@@ -188,8 +188,10 @@ type Query {
   getCurrentUser: User
 
   zitat(_id: ID, kennwort: String, wort: String): Zitat
+  getZitate(input: ZitatInput): [Zitat]
   getAllZitate: [Zitat]
   getUserZitate(username: String!): [Zitat]
+  suchZitate(suchBegr: String, username: String): [Zitat]
 }
 
 type Mutation {

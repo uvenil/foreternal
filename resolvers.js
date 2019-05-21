@@ -838,8 +838,38 @@ exports.resolvers = {
       }
       return zitat;
     },
+    getZitate: async (root, {input}, { Zitat }) => {
+      const suchObj = _.pickBy(input, val=>!_.isUndefined(val));
+      console.log({suchObj});
+      // // ODER-Suche
+      // const suchArr = Object.keys(suchObj).map(key => ({key: { "$eq": suchObj[key] }}));
+      // let findObj = {$or: suchArr};
+      const allZitate = await Zitat.find(suchObj).sort({ 
+        updatedDate: "desc",
+        kennwort: "asc"
+      });
+      return allZitate;
+    },
+    suchZitate: async (root, { suchBegr, username }, { Zitat }) => {
+      let findObj = username!=="admin"? {username}: {};   // bei admin ohne username suchen
+      if (!suchBegr) {
+        const zitate = await this.resolvers.Query.getUserZitate(root, findObj, { Zitat })
+        return zitate;
+      }
+      // suchBegr vorhanden
+      findObj = {...findObj, $text: { $search: suchBegr }};
+      const zitate = await Zitat.find(
+        findObj,
+        {
+          score: { $meta: "textScore" }
+        }
+      ).sort({
+        score: { $meta: "textScore" }
+      });
+      return zitate;
+    },
     getAllZitate: async (root, args, { Zitat }) => {
-      const allZitate = await Zitat.find().sort({ 
+      const allZitate = await Zitat.find(args).sort({ 
         updatedDate: "desc",
         kennwort: "asc"
       });
@@ -1102,29 +1132,6 @@ exports.resolvers = {
       console.log({updatesatz});
       return updatesatz;
     },
-    // deleteSatzZuneu: async (root, { _id }, { Satz, Wort }) => {  // Satz löschen, Worte unlinken und ggf. unverlinkte Worte löschen
-    //   try {
-    //     const satz = await Satz.findOneAndRemove({ _id }).populate({
-    //       path: "wort",
-    //       model: "Wort"
-    //     });
-    //   } catch (e) {
-    //     console.log(`! Satz mit id "${_is}" konnte nicht fehlerfrei gelöscht werden! (Aufruf: findOneAndRemove, Fkt. deleteSatz, resolvers.js)`);
-    //     return;
-    //   }
-    //   console.log("dS1 satz", satz);
-    //   try {
-    //     const loeschworte = await wortunlinks(satz, Wort);
-    //   } catch (e) {
-    //     console.log(`! Satz "${satz.wort.wort}" konnte nicht fehlerfrei geunlinkt werden! (Aufruf: wortunlinks, Fkt. deleteSatz, resolvers.js)`);
-    //     console.log("Error: ", e);
-    //     return;
-    //   }
-    //   console.log("dS2 satz", satz);
-    //   console.log("Gelöschter Satz:", satz.wort.wort);
-    //   console.log("Gelöschte Worte:", loeschworte);
-    //   return satz;  // wird in der graphql-response nicht so wie im log zurückgegeben, da ggf. die Worte gelöscht sind
-    // },
     // Nachfolgende 3 resolver noch nicht benutzt
     addUserSatze: async (root, { ids, username }, { User }) => {
       if (!Array.isArray(ids)) ids = [ids];
