@@ -1375,7 +1375,7 @@ exports.resolvers = {
       }
       return zitat;
     },
-    updateZitat: async (root, { _id, input }, { Zitat }) => {
+    updateZitat: async (root, { _id, input }, { Zitat }) => { // ! aufpassen bei username-Änderungen, Zitat wird noch nicht bei betroffenen Usern ein-, ausgetragen
       const updatezitat = await Zitat.findOneAndUpdate(
         { _id },
         { $set: {
